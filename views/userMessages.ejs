@@ -1,0 +1,7 @@
+<h2><%= title %></h2>
+<ul>
+  <% messages.map((message) => { %>
+  <li>(<%= message.added %>) <%= message.text %></li>
+  <% }) %>
+</ul>
+<a href="/">Go back</a>
