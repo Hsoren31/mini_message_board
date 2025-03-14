@@ -1,9 +1,9 @@
-const db = require("../db");
+import { getUserByName as _getUserByName } from "../db";
 
 async function getUserByName(req, res) {
   const { userId } = req.params;
 
-  const userData = await db.getUserByName(String(userId));
+  const userData = await _getUserByName(String(userId));
 
   console.log(userData);
 
@@ -18,4 +18,4 @@ async function getUserByName(req, res) {
   });
 }
 
-module.exports = { getUserByName };
+export default { getUserByName };

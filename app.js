@@ -1,18 +1,14 @@
-const express = require("express");
-const path = require("node:path");
-const {
-  messages,
-  addMessage,
-  formatDate,
-} = require("../mini-message-board/db");
+import express, { urlencoded } from "express";
+import { join } from "node:path";
+import { messages, addMessage, formatDate } from "../mini-message-board/db";
 //initialize app which is the server
 const app = express();
-const userRouter = require("./routes/userRouter");
+import userRouter from "./routes/userRouter";
 
-app.set("views", path.join(__dirname, "views"));
+app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
 //app.get a route
-app.use(express.urlencoded({ extended: true }));
+app.use(urlencoded({ extended: true }));
 app.use("/users", userRouter);
 app.post("/new", (req, res, next) => {
   addMessage({
