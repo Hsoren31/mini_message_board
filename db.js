@@ -32,4 +32,4 @@ function formatDate(date) {
   return `${day}/${month}/${year} ${time}`;
 }
 
-module.exports = { messages, getUserByName, addMessage, formatDate };
+export { messages, getUserByName, addMessage, formatDate };

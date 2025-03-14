@@ -1,11 +1,9 @@
-import { getUserByName as _getUserByName } from "../db";
+import { getUserByName } from "../db.js";
 
-async function getUserByName(req, res) {
+async function getUserDataByName(req, res) {
   const { userId } = req.params;
 
-  const userData = await _getUserByName(String(userId));
-
-  console.log(userData);
+  const userData = await getUserByName(String(userId));
 
   if (!userData) {
     res.status(404).send("User not found.");
@@ -18,4 +16,4 @@ async function getUserByName(req, res) {
   });
 }
 
-export default { getUserByName };
+export { getUserDataByName };

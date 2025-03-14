@@ -1,9 +1,13 @@
 import express, { urlencoded } from "express";
+import path from "path";
+import { fileURLToPath } from "node:url";
 import { join } from "node:path";
-import { messages, addMessage, formatDate } from "../mini-message-board/db";
+import { messages, addMessage, formatDate } from "./db.js";
 //initialize app which is the server
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 const app = express();
-import userRouter from "./routes/userRouter";
+import userRouter from "./routes/userRouter.js";
 
 app.set("views", join(__dirname, "views"));
 app.set("view engine", "ejs");
