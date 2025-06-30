@@ -1,42 +1,24 @@
-import express, { urlencoded } from "express";
-import path from "path";
-import { fileURLToPath } from "node:url";
-import { join } from "node:path";
-import { messages, addMessage, formatDate } from "./db.js";
-//initialize app which is the server
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const express = require("express");
+const path = require("node:path");
+const db = require("./db");
+
 const app = express();
-import userRouter from "./routes/userRouter.js";
+const messageRouter = require("./routes/messageRouter");
 
-app.set("views", join(__dirname, "views"));
+//connect to views
+app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "ejs");
-//app.get a route
-app.use(urlencoded({ extended: true }));
-app.use("/users", userRouter);
-app.post("/new", (req, res, next) => {
-  addMessage({
-    text: req.body.messageText,
-    user: req.body.messageUser,
-    added: formatDate(new Date()),
-  });
 
-  res.redirect("/");
-});
-app.get("/new", (req, res) => res.render("messageForm"));
+//access form values
+app.use(express.urlencoded({ extended: true }));
 
-app.get("/", (req, res) =>
-  res.render("index", {
-    title: "Mini Messageboard",
-    messages: messages,
-  })
-);
-
-app.get("*", (req, res) => {
-  res.send("404 error");
+app.use("/new", messageRouter);
+app.get("/", (req, res) => {
+  const messages = db.messages;
+  res.render("index", { messages: messages });
 });
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 app.listen(PORT, () => {
-  console.log(`My first Express app - listening on port ${PORT}!`);
+  console.log(`My first Express app - listening on port ${PORT}...`);
 });

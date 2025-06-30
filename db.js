@@ -17,13 +17,16 @@ async function getUserByName(userId) {
   return { user, userMessages };
 }
 
-async function addMessage(message) {
-  messages.push(message);
+async function addMessage(user, message) {
+  messages.push({
+    user,
+    text: message,
+    added: formatDate(new Date()),
+  });
 }
 
 function formatDate(date) {
   date = date.toString();
-  console.log(date);
   const year = date.slice(11, 16);
   const month = date.slice(4, 7);
   const day = date.slice(8, 11);
@@ -32,4 +35,4 @@ function formatDate(date) {
   return `${day}/${month}/${year} ${time}`;
 }
 
-export { messages, getUserByName, addMessage, formatDate };
+module.exports = { messages, getUserByName, addMessage, formatDate };
