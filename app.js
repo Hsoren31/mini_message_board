@@ -1,7 +1,8 @@
 const express = require("express");
 const path = require("node:path");
-const db = require("./db");
+const db = require("./db/queries");
 
+require("dotenv").config();
 const app = express();
 const messageRouter = require("./routes/messageRouter");
 
@@ -13,8 +14,8 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 
 app.use("/new", messageRouter);
-app.get("/", (req, res) => {
-  const messages = db.messages;
+app.get("/", async (req, res) => {
+  const messages = await db.getAllMessages();
   res.render("index", { messages: messages });
 });
 
