@@ -1,6 +1,7 @@
 {
   "scripts": {
     "start": "node app.js",
+    "populate": "no db/populatedb.js",
     "dev": "node --run -- --watch",
     "test": "node --test"
   },
